@@ -13,6 +13,8 @@
 		6D7AD8662BFD7B4C0012737F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7AD8652BFD7B4C0012737F /* ViewController.swift */; };
 		6D7AD86B2BFD7B4D0012737F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D7AD86A2BFD7B4D0012737F /* Assets.xcassets */; };
 		6D7AD86E2BFD7B4D0012737F /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 6D7AD86D2BFD7B4D0012737F /* Base */; };
+		6D7AD87E2BFEDBE60012737F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7AD87D2BFEDBE50012737F /* LoginViewController.swift */; };
+		6D7AD8812BFEDC140012737F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7AD8802BFEDC140012737F /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		6D7AD86A2BFD7B4D0012737F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D7AD86D2BFD7B4D0012737F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D7AD86F2BFD7B4D0012737F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Chat App/Resources/Info.plist"; sourceTree = SOURCE_ROOT; };
+		6D7AD87D2BFEDBE50012737F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		6D7AD8802BFEDC140012737F /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		B4C3655010D675165F0000B1 /* Pods-Chat App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat App.debug.xcconfig"; path = "Target Support Files/Pods-Chat App/Pods-Chat App.debug.xcconfig"; sourceTree = "<group>"; };
 		C7C573D53D4B9E7E190F2E5A /* Pods-Chat App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat App.release.xcconfig"; path = "Target Support Files/Pods-Chat App/Pods-Chat App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,9 +65,9 @@
 		6D7AD8602BFD7B4C0012737F /* Chat App */ = {
 			isa = PBXGroup;
 			children = (
+				6D7AD87B2BFEDA980012737F /* Controllers */,
 				6D7AD8762BFD7DF70012737F /* Resources */,
 				6D7AD8752BFD7DB30012737F /* Delegates */,
-				6D7AD8652BFD7B4C0012737F /* ViewController.swift */,
 			);
 			path = "Chat App";
 			sourceTree = "<group>";
@@ -85,6 +89,24 @@
 				6D7AD86C2BFD7B4D0012737F /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		6D7AD87B2BFEDA980012737F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6D7AD87C2BFEDAB80012737F /* Onboarding */,
+				6D7AD8652BFD7B4C0012737F /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		6D7AD87C2BFEDAB80012737F /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				6D7AD87D2BFEDBE50012737F /* LoginViewController.swift */,
+				6D7AD8802BFEDC140012737F /* RegisterViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		D74346726ED426EFFB177F81 /* Frameworks */ = {
@@ -111,6 +133,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D7AD8722BFD7B4D0012737F /* Build configuration list for PBXNativeTarget "Chat App" */;
 			buildPhases = (
+				6D1ABE592C1B4B360022F9BA /* ShellScript */,
 				F380AD570FFC9E0C1BFC0C82 /* [CP] Check Pods Manifest.lock */,
 				6D7AD85A2BFD7B4C0012737F /* Sources */,
 				6D7AD85B2BFD7B4C0012737F /* Frameworks */,
@@ -171,6 +194,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6D1ABE592C1B4B360022F9BA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		F380AD570FFC9E0C1BFC0C82 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -200,6 +242,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D7AD87E2BFEDBE60012737F /* LoginViewController.swift in Sources */,
+				6D7AD8812BFEDC140012737F /* RegisterViewController.swift in Sources */,
 				6D7AD8662BFD7B4C0012737F /* ViewController.swift in Sources */,
 				6D7AD8622BFD7B4C0012737F /* AppDelegate.swift in Sources */,
 				6D7AD8642BFD7B4C0012737F /* SceneDelegate.swift in Sources */,
@@ -350,6 +394,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = T2NP32FJ4X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Chat App/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -380,6 +425,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = T2NP32FJ4X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Chat App/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
