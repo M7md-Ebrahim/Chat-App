@@ -8,13 +8,18 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
+    private let imv: UIImageView = {
+        let imageView = UIImageView()
+        let image = UIImage(named: "logo")
+        imageView.image = image
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "Register"
-    }
-    @objc func register() {
-        let loginViewController = RegisterViewController()
-        navigationController?.pushViewController(loginViewController, animated: true)
+        title = "Create Account"
     }
 }

@@ -7,15 +7,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConversationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let loggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
-        let viewController = loggedIn ? LoginViewController() : RegisterViewController()
+        let loggedIn = UserDefaults.standard.bool(forKey: Constants.loginKey)
+        let viewController = loggedIn ? RegisterViewController() : LoginViewController()
         let nav = UINavigationController(rootViewController: viewController)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: false)
