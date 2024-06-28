@@ -5,6 +5,11 @@
 //  Created by M7md  on 23/05/2024.
 //
 
+
+//picker بامبرج
+//crirucler image fast mac
+//firebase docs for ios
+
 import UIKit
 
 class RegisterViewController: UIViewController {
@@ -149,22 +154,27 @@ class RegisterViewController: UIViewController {
             profileImageView.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             profileImageView.heightAnchor.constraint(equalToConstant: 200),
             profileImageView.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.4),
+            
             emailTextField.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 5),
             emailTextField.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             emailTextField.heightAnchor.constraint(equalToConstant: 50),
             emailTextField.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.8),
+            
             firstNameTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 10),
             firstNameTextField.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             firstNameTextField.heightAnchor.constraint(equalToConstant: 50),
             firstNameTextField.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.8),
+            
             lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 10),
             lastNameTextField.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             lastNameTextField.heightAnchor.constraint(equalToConstant: 50),
             lastNameTextField.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.8),
+            
             passwordTextField.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 10),
             passwordTextField.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             passwordTextField.heightAnchor.constraint(equalToConstant: 50),
             passwordTextField.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.8),
+            
             registerButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
             registerButton.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             registerButton.heightAnchor.constraint(equalToConstant: 50),
