@@ -5,7 +5,7 @@
 //  Created by M7md  on 23/05/2024.
 //
 
-
+//mvp
 //picker بامبرج
 //crirucler image fast mac
 //firebase docs for ios
@@ -42,6 +42,7 @@ class RegisterViewController: UIViewController {
         textField.leftViewMode = .always
         textField.rightViewMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.keyboardType = .emailAddress
         textField.returnKeyType = .continue
         return textField
     }()
