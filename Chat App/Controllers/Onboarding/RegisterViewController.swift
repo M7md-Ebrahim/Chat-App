@@ -139,12 +139,12 @@ class RegisterViewController: UIViewController {
         passwordTextField.resignFirstResponder()
         guard let email = emailTextField.text, let firstName = firstNameTextField.text, let lastName = lastNameTextField.text, let password = passwordTextField.text,
             !email.isEmpty, !firstName.isEmpty, !lastName.isEmpty, !password.isEmpty, password.count >= 6 else {
-            loginError()
+            registerError()
             return
         }
         print("Done")
     }
-    private func loginError() {
+    private func registerError() {
         let alert = UIAlertController(title: "Error", message: "Incorrect Info", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
         present(alert, animated: true)

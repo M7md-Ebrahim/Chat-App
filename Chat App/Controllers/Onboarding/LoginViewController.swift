@@ -36,6 +36,7 @@ class LoginViewController: UIViewController {
         textField.leftViewMode = .always
         textField.rightViewMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.keyboardType = .emailAddress
         textField.returnKeyType = .continue
         return textField
     }()
