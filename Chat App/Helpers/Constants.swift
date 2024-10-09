@@ -8,6 +8,6 @@
 import Foundation
 enum Constants {
     static let loginKey = "Logged_in"
-    static let chatIcon = "logo"
     static let profileImage = "person.crop.circle.fill"
+    static let chatIcon = "message.badge.fill"
 }

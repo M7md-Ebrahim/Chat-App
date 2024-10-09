@@ -15,7 +15,8 @@ class LoginViewController: UIViewController {
     }()
     private let chatImageView: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(named: Constants.chatIcon)
+        let image = UIImage(systemName: Constants.chatIcon)
+        imageView.tintColor = .label
         imageView.image = image
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
@@ -61,6 +62,7 @@ class LoginViewController: UIViewController {
     private let loginButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("Log In", for: .normal)
+        btn.setTitleColor(.systemBackground, for: .normal)
         btn.backgroundColor = .label
         btn.tintColor = .systemBackground
         btn.layer.cornerRadius = 12
@@ -83,6 +85,7 @@ class LoginViewController: UIViewController {
         loginButton.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        updateborderColor()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -125,6 +128,14 @@ class LoginViewController: UIViewController {
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.widthAnchor.constraint(equalTo: loginScrollView.widthAnchor, multiplier: 0.8)
         ])
+    }
+    private func updateborderColor() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, previousTraitCollection: UITraitCollection) in
+            if self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+                self.emailTextField.layer.borderColor = UIColor.label.cgColor
+                self.passwordTextField.layer.borderColor = UIColor.label.cgColor
+            }
+        }
     }
 }
 

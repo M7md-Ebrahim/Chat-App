@@ -5,10 +5,10 @@
 //  Created by M7md  on 23/05/2024.
 //
 
-//mvp
-//picker بامبرج
-//crirucler image fast mac
-//firebase docs for ios
+// mvp
+// picker بامبرج
+// crirucler image fast mac
+// firebase docs for ios
 
 import UIKit
 
@@ -101,6 +101,7 @@ class RegisterViewController: UIViewController {
     private let registerButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("Register", for: .normal)
+        btn.setTitleColor(.systemBackground, for: .normal)
         btn.backgroundColor = .label
         btn.tintColor = .systemBackground
         btn.layer.cornerRadius = 12
@@ -127,10 +128,12 @@ class RegisterViewController: UIViewController {
         lastNameTextField.delegate = self
         passwordTextField.delegate = self
         profileImageGesture()
+        updateborderColor()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         registerScrollView.frame = view.bounds
+        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
     }
     @objc private func registerButtonTapped() {
         emailTextField.resignFirstResponder()
@@ -153,10 +156,10 @@ class RegisterViewController: UIViewController {
         NSLayoutConstraint.activate([
             profileImageView.topAnchor.constraint(equalTo: registerScrollView.topAnchor, constant: 60),
             profileImageView.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
-            profileImageView.heightAnchor.constraint(equalToConstant: 200),
-            profileImageView.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.4),
+            profileImageView.heightAnchor.constraint(equalToConstant: 180),
+            profileImageView.widthAnchor.constraint(equalTo: profileImageView.heightAnchor),
             
-            emailTextField.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 5),
+            emailTextField.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 10),
             emailTextField.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             emailTextField.heightAnchor.constraint(equalToConstant: 50),
             emailTextField.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.8),
@@ -188,8 +191,15 @@ class RegisterViewController: UIViewController {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(profileImagePick))
         profileImageView.addGestureRecognizer(gesture)
     }
-    @objc private func profileImagePick() {
-        print("Photo chenaged")
+    private func updateborderColor() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, previousTraitCollection: UITraitCollection) in
+            if self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+                self.emailTextField.layer.borderColor = UIColor.label.cgColor
+                self.firstNameTextField.layer.borderColor = UIColor.label.cgColor
+                self.lastNameTextField.layer.borderColor = UIColor.label.cgColor
+                self.passwordTextField.layer.borderColor = UIColor.label.cgColor
+            }
+        }
     }
 }
 
@@ -204,5 +214,45 @@ extension RegisterViewController: UITextFieldDelegate {
         } else {
             registerButtonTapped() }
         return true
+    }
+}
+
+extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    @objc private func profileImagePick() {
+        let actionSheet = UIAlertController(title: "Profile Picture",
+                                            message: "How would you like to select a picture?",
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { [weak self] _ in
+            self?.presentCamera()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Select Photo", style: .default, handler: { [weak self] _ in
+            self?.presentPhotoPicker()
+        }))
+        present(actionSheet, animated: true)
+    }
+    private func presentCamera() {
+        let imagePickerVC = UIImagePickerController()
+        imagePickerVC.delegate = self
+        imagePickerVC.sourceType = .camera
+        imagePickerVC.allowsEditing = true
+        present(imagePickerVC, animated: true)
+    }
+    private func presentPhotoPicker() {
+        let imagePickerVC = UIImagePickerController()
+        imagePickerVC.delegate = self
+        imagePickerVC.sourceType = .photoLibrary
+        imagePickerVC.allowsEditing = true
+        present(imagePickerVC, animated: true)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true)
+        guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+            return
+        }
+        profileImageView.image = selectedImage
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }
