@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     private let loginScrollView: UIScrollView = {
@@ -102,7 +103,16 @@ class LoginViewController: UIViewController {
             loginError()
             return
         }
-        print("Done")
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authResult, error in
+            guard let strongSelf = self else {
+                return
+            }
+            guard let _ = authResult, error == nil else {
+                print("Yaw")
+                return
+            }
+            strongSelf.navigationController?.dismiss(animated: true)
+        })
     }
     private func loginError() {
         let alert = UIAlertController(title: "Error", message: "Incorrect email or password", preferredStyle: .alert)
@@ -113,8 +123,8 @@ class LoginViewController: UIViewController {
         NSLayoutConstraint.activate([
             chatImageView.topAnchor.constraint(equalTo: loginScrollView.topAnchor, constant: 60),
             chatImageView.centerXAnchor.constraint(equalTo: loginScrollView.centerXAnchor),
-            chatImageView.heightAnchor.constraint(equalToConstant: 200),
-            chatImageView.widthAnchor.constraint(equalTo: loginScrollView.widthAnchor, multiplier: 0.3),
+            chatImageView.heightAnchor.constraint(equalToConstant: 180),
+            chatImageView.widthAnchor.constraint(equalTo: chatImageView.heightAnchor),
             emailTextField.topAnchor.constraint(equalTo: chatImageView.bottomAnchor, constant: 10),
             emailTextField.centerXAnchor.constraint(equalTo: loginScrollView.centerXAnchor),
             emailTextField.heightAnchor.constraint(equalToConstant: 50),

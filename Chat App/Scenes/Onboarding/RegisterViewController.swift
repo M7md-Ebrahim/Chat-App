@@ -7,6 +7,7 @@
 
 
 import UIKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
     private let registerScrollView: UIScrollView = {
@@ -141,7 +142,26 @@ class RegisterViewController: UIViewController {
             registerError()
             return
         }
-        print("Done")
+        let user = UserModel(firstName: firstName, lastName: lastName, email: email)
+        DatabaseManger.shared.userExists(user.safeEmail) { [weak self] exists in
+            guard let strongSelf = self else {
+                return
+            }
+            guard !exists else
+            {
+                //alert
+                return
+            }
+            
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) {  authResult, error in
+                guard let _ = authResult, error == nil else {
+                    print("Yaw")
+                    return
+                }
+                DatabaseManger.shared.insertUser(user)
+                strongSelf.navigationController?.dismiss(animated: true)
+            }
+        }
     }
     private func registerError() {
         let alert = UIAlertController(title: "Error", message: "Incorrect Info", preferredStyle: .alert)
@@ -154,27 +174,22 @@ class RegisterViewController: UIViewController {
             profileImageView.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             profileImageView.heightAnchor.constraint(equalToConstant: 180),
             profileImageView.widthAnchor.constraint(equalTo: profileImageView.heightAnchor),
-            
             emailTextField.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 10),
             emailTextField.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             emailTextField.heightAnchor.constraint(equalToConstant: 50),
             emailTextField.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.8),
-            
             firstNameTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 10),
             firstNameTextField.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             firstNameTextField.heightAnchor.constraint(equalToConstant: 50),
             firstNameTextField.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.8),
-            
             lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 10),
             lastNameTextField.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             lastNameTextField.heightAnchor.constraint(equalToConstant: 50),
             lastNameTextField.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.8),
-            
             passwordTextField.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 10),
             passwordTextField.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             passwordTextField.heightAnchor.constraint(equalToConstant: 50),
             passwordTextField.widthAnchor.constraint(equalTo: registerScrollView.widthAnchor, multiplier: 0.8),
-            
             registerButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
             registerButton.centerXAnchor.constraint(equalTo: registerScrollView.centerXAnchor),
             registerButton.heightAnchor.constraint(equalToConstant: 50),
@@ -215,29 +230,20 @@ extension RegisterViewController: UITextFieldDelegate {
 
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @objc private func profileImagePick() {
-        let actionSheet = UIAlertController(title: "Profile Picture",
-                                            message: "How would you like to select a picture?",
-                                            preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        let actionSheet = UIAlertController(title: "Profile Picture", message: "How would you like to select a picture?", preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { [weak self] _ in
-            self?.presentCamera()
+            self?.presentImagePicker(.camera)
         }))
         actionSheet.addAction(UIAlertAction(title: "Select Photo", style: .default, handler: { [weak self] _ in
-            self?.presentPhotoPicker()
+            self?.presentImagePicker(.photoLibrary)
         }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(actionSheet, animated: true)
     }
-    private func presentCamera() {
+    private func presentImagePicker(_ type: UIImagePickerController.SourceType) {
         let imagePickerVC = UIImagePickerController()
         imagePickerVC.delegate = self
-        imagePickerVC.sourceType = .camera
-        imagePickerVC.allowsEditing = true
-        present(imagePickerVC, animated: true)
-    }
-    private func presentPhotoPicker() {
-        let imagePickerVC = UIImagePickerController()
-        imagePickerVC.delegate = self
-        imagePickerVC.sourceType = .photoLibrary
+        imagePickerVC.sourceType = type
         imagePickerVC.allowsEditing = true
         present(imagePickerVC, animated: true)
     }
